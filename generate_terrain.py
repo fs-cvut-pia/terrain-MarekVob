@@ -10,7 +10,7 @@ plt.rcParams["figure.figsize"] = (20,20)
 # Parameters for terrain generation
 width = 256
 height = 256
-scale = 0.02  # Adjust this for different terrain scales
+scale = 0.02 
 octaves = 6
 persistence = 0.5
 
@@ -20,7 +20,7 @@ terrain = np.zeros((height, width))
 # Generate terrain using Perlin noise
 for y in range(height):
     for x in range(width):
-        value = noise.pnoise2(x * scale, y * scale, octaves=octaves, persistence=persistence,base=seed)# + noise.pnoise2(x * scale, y * scale, octaves=octaves, persistence=0.6,base=seed)
+        value = noise.pnoise2(x * scale, y * scale, octaves=octaves, persistence=persistence,base=seed)
         terrain[y][x] = int(3500*(max(value,-0.01)+0.01)-300)
 
 # Create a 3D visualization of the terrain

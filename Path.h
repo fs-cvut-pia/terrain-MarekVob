@@ -2,22 +2,23 @@
 #define PATH_P
 
 #include "TerrainMap.h"
+#include <vector>
+#include <string>
 
-// Abstract class which needs to be extended to contain the actual path finding algorithm
-
+// Abstract class for storing path coordinates
 class Path {
 public:
     Path(TerrainMap& m, std::string name_in, Point start_in, Point finish_in);
-    virtual bool find() = 0;     // Implement this method to find the route and save it in vector<Point> path
-    void printStats() const;     // Print out path statistics
-    void saveToFile() const;     // Save path to file "name.dat"
-    std::string getName() const; // Returns path name
+    virtual ~Path() = default;
+    virtual bool find() = 0;     // Path finding implementation
+    void printStats() const;     // Print statistics
+    void saveToFile() const;     // Save path to file
+    std::string getName() const; // Path name
 protected:
     TerrainMap& map;
     std::vector<Point> path;
     const Point start; 
     const Point finish;
-private:
     std::string name;
 };
 
