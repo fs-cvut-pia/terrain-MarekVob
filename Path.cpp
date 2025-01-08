@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 
-Path::Path(TerrainMap& m, std::string name_in, Point start_in, Point finish_in) : map(m), name(name_in), start(start_in), finish(finish_in) {};
+Path::Path(TerrainMap& m, std::string name_in, Point start_in, Point finish_in) : map(m), name(name_in), start(start_in), finish(finish_in) {}
 
 void Path::printStats() const {
     bool land = false;

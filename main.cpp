@@ -1,10 +1,11 @@
 #include "TerrainMap.h"
 #include "Path.h"
+#include "Airplane.h"
+#include "Boat.h"
+#include "Road.h"
 #include <vector>
 #include <iostream>
 #include <string>
-
-// Include files of your path classes will need to be added here
 
 Point read_coordinates(int argc, char *argv[], int i_option) {
     Point p;
@@ -21,31 +22,33 @@ int main(int argc, char *argv[]) {
 
     std::string terrain_filename;
 
-    // Load the terrain map
-
+    // Load terrain map
     if (argc > 1) terrain_filename = argv[1];
     else { std::cout << "No terrain file specified!" << std::endl; return 0; }
 
     TerrainMap m(nx,ny,terrain_filename);
 
-    // Load the coordinates of the start and end points
-
+    // Load coordinates of start and end points
     Point start = read_coordinates(argc,argv,2);
     Point finish = read_coordinates(argc,argv,4);
 
-    std::vector<Path*> paths = { //new YourPath(m,"MyPathName",start,finish), ...
-        // Here add the list of dynamically created classes with path finding algorithms
-    };
+   std::vector<Path*> paths = {
+    new Airplane(m, "AirplanePath", start, finish),
+    new Boat(m, "BoatPath", start, finish),
+    new Road(m, "RoadPath", start, finish) 
+};
 
-    for (auto& p : paths) {
+for (auto& p : paths) {
+    if (p->find()) {  // Call `find()` and check if path was found
         std::cout << "Path search: " << p->getName() << std::endl;
         std::cout << "=============" << std::endl;
-        p->find();
-        p->printStats();
+        p->printStats();    // Print statistics
         std::cout << "=============" << std::endl;
-        p->saveToFile();
-        delete p;
+        p->saveToFile();    // Save path to file
+    } else {
+        std::cout << "Failed to find path: " << p->getName() << std::endl;
     }
+    delete p; // Free memory
+}
 
-    return 0;
 }
